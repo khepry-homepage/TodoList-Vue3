@@ -1,17 +1,21 @@
 <template>
   <li class="todo-item">
     <div class="main-item">
-      <span class="item-check iconfont cursor" 
-        @click="handleTodoCheck({ id: todo.id, isCheck: todo.isCheck ? false : true})" 
-        :class="{'checked': todo.isCheck}">&#xe600;</span>
+      <span class="item-check cursor" 
+        @click="handleTodoCheck({ id: todo.id, isCheck: todo.isCheck ? false : true})">
+        <svg-icon iconName="non-checked" :class="{checked: todo.isCheck}"></svg-icon>
+      </span>
       <span class="todo-content">{{todo.content}}</span>
       <span class="todo-category">{{todo.categoryName}}</span>
+      <span class="todo-edit cursor" @click="handleEditTodo">
+        <svg-icon iconName="edit" :customizedStyle="{width: '1.5rem', height: '1.5rem'}"></svg-icon>
+      </span>
     </div>
     <div class="todo-time">
       <span class="week">{{days}}</span>
       <span class="time">{{time}}</span>
-      <span v-show="todo.needBell">
-        {{bell}}
+      <span class="alarm" v-show="todo.alarmTime">
+        {{ alarm }}
       </span>
     </div>
 
@@ -24,7 +28,8 @@
 
 <script>
 import SubTodo from './SubTodo.vue'
-import { computed, toRefs, provide, inject } from 'vue'
+import { computed, toRefs, toRaw, provide, inject } from 'vue'
+import emitter from 'utils/eventbus.js'
 import { getDiffDays } from 'utils/index.js'
 export default {
   name: 'TodoItem',
@@ -37,7 +42,7 @@ export default {
   },
   setup(props) {
     const todo = props.todo;
-    const handleTodoCheck = inject('handleTodoCheck');
+
     const days = computed(() => {
       const diffDays = getDiffDays(todo.startTime, new Date().toString());
       return diffDays === 0 ? '今天' : diffDays === 1 ? '明天' : diffDays + '天后'; 
@@ -45,24 +50,34 @@ export default {
     const time = computed(() => {
       return new Date(todo.startTime).Format('hh:mm');
     })
-    const bell = computed(() => {
-        const diffDays = getDiffDays(todo.alarmTime, new Date().toString())
-        return (diffDays === 0 ? '今天' : diffDays === 1 ? '明天' : diffDays + '天后') + 
-                `${new Date(todo.alarmTime).Format('hh:mm')}响铃${todo.repetition}次`
+    const alarm = computed(() => {
+      if (!todo.alarmTime) return null;
+      let [ alarmTime ] = todo.alarmTime;
+      const diffDays = getDiffDays(alarmTime, new Date().toString())
+      return (diffDays === 0 ? '今天' : diffDays === 1 ? '明天' : diffDays + '天后') + 
+              `${new Date(alarmTime).Format('hh:mm')}响铃`
     })
 
+
+    const handleTodoCheck = inject('handleTodoCheck');
     const handleSubTodoCheck = ({ subid, isCheck }) => {
       const subtodoIdx = todo.subtodos.findIndex(subtodo => subtodo.id == subid);
       if (subtodoIdx == -1) return;
       handleTodoCheck({ id: todo.id, subid, isCheck });
     } 
+
+    const handleEditTodo = () => {
+      emitter.emit('editItem', toRaw(todo));
+    }
+
     provide('handleSubTodoCheck', handleSubTodoCheck);
     return {
       ...toRefs(props),
       days,
       time,
-      bell,
-      handleTodoCheck
+      alarm,
+      handleTodoCheck,
+      handleEditTodo
     }
 }
 };
@@ -81,8 +96,10 @@ export default {
 .todo-item {
   list-style-type: none;
   background-color: rgb(133, 207, 209);
+  border-bottom: 1px solid rgb(51, 50, 50);
 }
 .main-item {
+  position: relative;
   font-size: 1.5rem;
   .item-check {
     margin-left: 0.5rem;
@@ -98,11 +115,21 @@ export default {
     margin-left: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    max-width: 4rem;
+    width: 2rem;
+    text-align: center;
     vertical-align: text-top !important;
     border-radius: 50%;
     background-color: cadetblue;
   }
+  .todo-edit {
+    position: absolute;
+    right: 1rem;
+    vertical-align: middle;
+    color: rgba(0, 171, 250, 0.904);
+    &:hover {
+      color: rgb(6, 122, 218);
+    }
+  } 
 }
 .main-item, .todo-time {
   text-align: left;
@@ -110,13 +137,19 @@ export default {
 .todo-time {
   padding-left: 2rem;
   border-bottom: 1px dashed rgb(124, 123, 123);
-  .week, .time {
+  .week, .time, .alarm {
+    display: inline-block;
     text-align: left;
     width: 30%;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 .week::before,
-.time::before {
+.time::before,
+.alarm::before {
   font-family: "iconfont" !important;
 }
 .week::before {
@@ -125,7 +158,10 @@ export default {
 .time::before {
   content: "\e6c1";
 }
+.alarm::before {
+  content: '\e657';
+}
 .checked {
-  color: rgb(18, 146, 35) !important; 
+  color: rgb(110, 165, 28);
 }
 </style>

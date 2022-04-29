@@ -1,16 +1,20 @@
 <template>
   <n-grid :cols="4">
     <n-grid-item @click="selectPage(0)">
-      <div class="todo-home-icon iconfont cursor" :class="{'activated': activatedIdx == 0}">&#xe6bb;</div>
+      <svg-icon iconName="homefill" :customizedStyle="{width: '2rem', height: '2rem'}"
+        class="cursor" :class="{'activated': activatedIdx == 0}"></svg-icon>
     </n-grid-item>
     <n-grid-item @click="selectPage(1)">
-      <div class="todo-chart-icon iconfont cursor" :class="{'activated': activatedIdx == 1}">&#xe62a;</div>
+      <svg-icon iconName="chart" :customizedStyle="{width: '2rem', height: '2rem'}"
+        class="cursor" :class="{'activated': activatedIdx == 1}"></svg-icon>
     </n-grid-item>
     <n-grid-item @click="selectPage(2)">
-      <div class="todo-timer-icon iconfont cursor" :class="{'activated': activatedIdx == 2}">&#xe651;</div>
+      <svg-icon iconName="timer-f" :customizedStyle="{width: '2rem', height: '2rem'}"
+        class="cursor" :class="{'activated': activatedIdx == 2}"></svg-icon>
     </n-grid-item>
     <n-grid-item @click="selectPage(3)">
-      <div class="todo-user-icon iconfont cursor" :class="{'activated': activatedIdx == 3}">&#xe7d5;</div>
+      <svg-icon iconName="user-fill" :customizedStyle="{width: '2rem', height: '2rem'}"
+        class="cursor" :class="{'activated': activatedIdx == 3}"></svg-icon>
     </n-grid-item>
   </n-grid>
 </template>
@@ -36,18 +40,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.todo-home-icon,
-.todo-chart-icon,
-.todo-timer-icon,
-.todo-user-icon
-{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: black;
+.n-grid {
+  div {
+    margin: 0 auto;
+    color: black;
+  }
 }
 .activated {
   color: rgb(34, 20, 216) !important; 

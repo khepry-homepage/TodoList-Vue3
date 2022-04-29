@@ -1,8 +1,10 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 3176266 */
-  src: url('iconfont.woff2?t=1650642565413') format('woff2'),
-       url('iconfont.woff?t=1650642565413') format('woff'),
-       url('iconfont.ttf?t=1650642565413') format('truetype');
+  font-family: "iconfont"; /* Project id 3363332 */
+  /* Color fonts */
+  src: 
+       url('iconfont.woff2?t=1651219188930') format('woff2'),
+       url('iconfont.woff?t=1651219188930') format('woff'),
+       url('iconfont.ttf?t=1651219188930') format('truetype');
 }
 
 .iconfont {
@@ -13,75 +15,39 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.todo-icon-non-checked:before {
+.edit:before {
+  content: "\e687";
+}
+
+.-to-do:before {
+  content: "\e61a";
+}
+
+.fenlei:before {
+  content: "\e638";
+}
+
+.zu:before {
+  content: "\e613";
+}
+
+.cuowu:before {
   content: "\e600";
 }
 
-.todo-icon-time:before {
-  content: "\e65f";
+.zirenwu:before {
+  content: "\e648";
 }
 
-.todo-icon-delete:before {
-  content: "\e67e";
-}
-
-.todo-icon-phone:before {
-  content: "\ec93";
-}
-
-.todo-icon-password:before {
-  content: "\e682";
-}
-
-.todo-icon-username:before {
-  content: "\e602";
-}
-
-.todo-icon-create:before {
-  content: "\e601";
-}
-
-.todo-icon-cancel:before {
-  content: "\e6aa";
-}
-
-.todo-icon-ok:before {
-  content: "\e64f";
-}
-
-.todo-icon-edit:before {
-  content: "\ec7c";
-}
-
-.todo-icon-alarm:before {
-  content: "\e657";
-}
-
-.todo-icon-calendar:before {
+.calendar:before {
   content: "\e6f5";
 }
 
-.todo-icon-clock:before {
+.alarm:before {
+  content: "\e657";
+}
+
+.clock:before {
   content: "\e6c1";
-}
-
-.todo-icon-right-arrow:before {
-  content: "\eb08";
-}
-
-.todo-icon-homefill:before {
-  content: "\e6bb";
-}
-
-.todo-icon-user-fill:before {
-  content: "\e7d5";
-}
-
-.todo-icon-chart:before {
-  content: "\e62a";
-}
-
-.todo-icon-timer-f:before {
-  content: "\e651";
 }
 
