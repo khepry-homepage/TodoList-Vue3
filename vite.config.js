@@ -15,6 +15,7 @@ export default defineConfig({
       'views': resolve(__dirname, '.', 'src/views'),
       'store': resolve(__dirname, '.', 'src/store'),
       'utils': resolve(__dirname, '.', 'src/utils'),
+      'router': resolve(__dirname, '.', 'src/router'),
     },
   },
   outDir: 'dist'

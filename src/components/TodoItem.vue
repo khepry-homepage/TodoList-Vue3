@@ -95,7 +95,6 @@ export default {
 }
 .todo-item {
   list-style-type: none;
-  background-color: rgb(133, 207, 209);
   border-bottom: 1px solid rgb(51, 50, 50);
 }
 .main-item {

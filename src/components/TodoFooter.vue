@@ -43,7 +43,10 @@ export default {
 .n-grid {
   div {
     margin: 0 auto;
-    color: black;
+    color: rgb(44, 43, 43);
+    &:hover {
+      color: black;
+    }
   }
 }
 .activated {

@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 3363332 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1651219188930') format('woff2'),
-       url('iconfont.woff?t=1651219188930') format('woff'),
-       url('iconfont.ttf?t=1651219188930') format('truetype');
+       url('iconfont.woff2?t=1651239317287') format('woff2'),
+       url('iconfont.woff?t=1651239317287') format('woff'),
+       url('iconfont.ttf?t=1651239317287') format('truetype');
 }
 
 .iconfont {
@@ -15,8 +15,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.edit:before {
-  content: "\e687";
+.-task-:before {
+  content: "\e61c";
+}
+
+.task_:before {
+  content: "\e684";
 }
 
 .-to-do:before {

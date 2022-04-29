@@ -2,7 +2,7 @@
   <li class="todo-subtodo">
     <input type="checkbox" :checked="subtodo.isCheck"
       @change="handleSubTodoCheck({ subid: subtodo.id, isCheck: subtodo.isCheck ? false : true})"/>
-    <span class="todo-subtodo-content">{{subtodo.content}}</span>
+    <span class="todo-subtodo-content">{{ subtodo.content }}</span>
   </li>
 </template>
 
@@ -23,6 +23,7 @@ export default {
 .todo-subtodo {
   border-left: 1px dashed rgb(124, 123, 123);
   border-bottom: 1px dashed rgb(124, 123, 123);
+  color: rgb(128, 126, 126);
   list-style: none;
   margin-left: 2rem;
   text-align: left;
@@ -35,6 +36,14 @@ export default {
   }
   .todo-subtodo-content, input {
     vertical-align: middle;
+  }
+  &:nth-last-child(1) {
+    border-bottom: 0;
+  }
+  &::after {
+    font-family: "iconfont" !important;
+    vertical-align: middle;
+    content: "\e684";
   }
 }
 
