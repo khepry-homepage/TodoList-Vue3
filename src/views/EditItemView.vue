@@ -1,6 +1,7 @@
 <template>
   <n-drawer
     v-model:show="active"
+    height="50%"
     :placement="placement"
     :trap-focus="false"
     to="#drawer-target"
@@ -101,15 +102,36 @@
 <script>
 import { reactive, toRefs, toRaw, onUnmounted } from 'vue'
 import { nanoid } from 'nanoid'
-import { useStore } from 'vuex'
 import emitter from 'utils/eventbus.js'
 import DragButton from 'components/DragButton.vue';
 import cloneDeep from 'lodash/cloneDeep'
 export default {
   name: 'EditItemView',
   components: { DragButton },
+  props: {
+    createTodoItem: {
+      require: true,
+      type: Function,
+    }
+  },
   setup(props) {
-    const store = useStore();
+    const createTodoItem = props.createTodoItem;
+    const state = reactive({
+      subtodoInputValue: null,
+      repeatState: 0,
+      needAlarm: false,
+      options: [
+        { label: '不重复', value: 0, },
+        { label: '每月', value: 1, },
+        { label: '每周', value: 2, },
+        { label: '每日', value: 3, },
+      ],
+      alarmTimes: ['1次', '2次', '3次'],
+      active: false,
+      placement: 'bottom',
+    })
+
+    const editContent = reactive({})
     /* 初始化编辑栏的文本内容与状态 */
     const initialContent = (ec, state) => {
       ec.id = null;
@@ -128,22 +150,6 @@ export default {
       state.active = false;
     }
 
-    const state = reactive({
-      subtodoInputValue: null,
-      repeatState: 0,
-      needAlarm: false,
-      options: [
-        { label: '不重复', value: 0, },
-        { label: '每月', value: 1, },
-        { label: '每周', value: 2, },
-        { label: '每日', value: 3, },
-      ],
-      alarmTimes: ['1次', '2次', '3次'],
-      active: false,
-      placement: 'bottom',
-    })
-
-    const editContent = reactive({})
     initialContent(editContent, state);
     /* 
      * 提供编辑事项的接口
@@ -232,7 +238,7 @@ export default {
         editContent.id = nanoid();
         flag = 0;
       }
-      store.commit('createTodoItem', { flag, todo: cloneDeep(toRaw(editContent)) });
+      createTodoItem({ flag, todo: cloneDeep(toRaw(editContent)) });
       initialContent(editContent, state);
     }
     const closeEditWindow = () => {
@@ -266,7 +272,7 @@ export default {
 .edit-box {
   background-color: rgb(240, 239, 239);
   border: 1px solid darkgray;
-  height: 16rem;
+  height: calc(100% - 0.6rem);
   padding-top: 0.5rem;
 }
 .add-subtodo {

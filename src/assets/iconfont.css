@@ -2,9 +2,9 @@
   font-family: "iconfont"; /* Project id 3363332 */
   /* Color fonts */
   src: 
-       url('iconfont.woff2?t=1651239317287') format('woff2'),
-       url('iconfont.woff?t=1651239317287') format('woff'),
-       url('iconfont.ttf?t=1651239317287') format('truetype');
+       url('iconfont.woff2?t=1651293431909') format('woff2'),
+       url('iconfont.woff?t=1651293431909') format('woff'),
+       url('iconfont.ttf?t=1651293431909') format('truetype');
 }
 
 .iconfont {
@@ -13,6 +13,26 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.greaterthan:before {
+  content: "\e625";
+}
+
+.navigation__e:before {
+  content: "\e601";
+}
+
+.weibiaoti-_huabanfuben:before {
+  content: "\e60f";
+}
+
+.tuichu:before {
+  content: "\ecb3";
+}
+
+.a-xingbietouxiang:before {
+  content: "\e763";
 }
 
 .-task-:before {

@@ -2,21 +2,20 @@
   <home-basic>
     <template #title>
       <div class="title">
-        待办事项
+        专注模式
       </div>
     </template>
     <template #main>
-      <todo-list></todo-list>
     </template>
   </home-basic>
 </template>
 
 <script>
 import HomeBasic from './HomeBasic.vue'
-import TodoList from 'components/TodoList.vue'
 export default {
-  name: 'ListView',
-  components: { HomeBasic, TodoList },
+  name: 'FocusView',
+  components: { HomeBasic },
+  props: {},
 };
 </script>
 <style lang="scss" scoped>

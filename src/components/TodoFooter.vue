@@ -12,7 +12,7 @@
       <svg-icon iconName="timer-f" :customizedStyle="{width: '2rem', height: '2rem'}"
         class="cursor" :class="{'activated': activatedIdx == 2}"></svg-icon>
     </n-grid-item>
-    <n-grid-item @click="selectPage(3)">
+    <n-grid-item @click="showUserView">
       <svg-icon iconName="user-fill" :customizedStyle="{width: '2rem', height: '2rem'}"
         class="cursor" :class="{'activated': activatedIdx == 3}"></svg-icon>
     </n-grid-item>
@@ -21,6 +21,8 @@
 
 <script>
 import { reactive, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
+import emitter from 'utils/eventbus.js'
 export default {
   name: 'TodoFooter',
   setup() {
@@ -28,13 +30,19 @@ export default {
       activatedIdx: 0, // 0-3表示第几个激活的底部图标
     })
 
+    const router = useRouter();
+    const routes = ['ListView', 'DataView', 'FocusView'];
     const selectPage = (index) => {
       state.activatedIdx = index;
+      router.push({ name: routes[index] });
     } 
-
+    const showUserView = () => { 
+      emitter.emit('showUserView');
+    }
     return { 
       ...toRefs(state),
-      selectPage
+      selectPage,
+      showUserView
     }
   }
 };

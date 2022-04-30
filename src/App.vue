@@ -2,8 +2,6 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { NConfigProvider, zhCN, dateZhCN } from 'naive-ui'
-
-
 /** 
  * 设置日历主题
  * js 文件下使用这个做类型提示

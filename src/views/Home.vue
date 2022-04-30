@@ -2,14 +2,16 @@
   <div id="home-page">
     <router-view></router-view>
     <todo-footer class="todo-footer"></todo-footer>
+    <user-view></user-view>
   </div>
 </template>
 
 <script>
 import TodoFooter from 'components/TodoFooter.vue'
+import UserView from 'views/UserView.vue'
 export default {
   name: 'Home',
-  components: { TodoFooter }
+  components: { TodoFooter, UserView },
 };
 </script>
 <style lang="scss" scoped>
