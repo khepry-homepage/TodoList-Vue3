@@ -1,7 +1,9 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { NConfigProvider, zhCN, dateZhCN } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, zhCN, dateZhCN } from 'naive-ui'
+import { useStore } from 'vuex'
+const store = useStore();
 /** 
  * 设置日历主题
  * js 文件下使用这个做类型提示
@@ -13,13 +15,28 @@ const themeOverrides = {
     "itemCellHeight": "24px",
   }
 }
+/* 初始化vuex全局状态 */
+if (sessionStorage.getItem("store")) {
+  store.replaceState(
+    Object.assign(
+      {},
+      store.state,
+      JSON.parse(sessionStorage.getItem("store"))
+    )
+  );
+}
 
+window.addEventListener("beforeunload", function () {
+  this.sessionStorage.setItem("store", JSON.stringify(store.state));
+})
 </script>
 
 <template>
 
   <n-config-provider class="config-provider" :theme-overrides="themeOverrides" :locale="zhCN" :date-locale="dateZhCN">
-    <router-view></router-view>
+    <n-message-provider>
+      <router-view></router-view>
+    </n-message-provider>
   </n-config-provider>
   
 </template>

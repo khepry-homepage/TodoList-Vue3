@@ -2,19 +2,19 @@
   <n-grid :cols="4">
     <n-grid-item @click="selectPage(0)">
       <svg-icon iconName="homefill" :customizedStyle="{width: '2rem', height: '2rem'}"
-        class="cursor" :class="{'activated': activatedIdx == 0}"></svg-icon>
+        class="cursor" :class="{'activate': activateIdx == 0}"></svg-icon>
     </n-grid-item>
     <n-grid-item @click="selectPage(1)">
       <svg-icon iconName="chart" :customizedStyle="{width: '2rem', height: '2rem'}"
-        class="cursor" :class="{'activated': activatedIdx == 1}"></svg-icon>
+        class="cursor" :class="{'activate': activateIdx == 1}"></svg-icon>
     </n-grid-item>
     <n-grid-item @click="selectPage(2)">
       <svg-icon iconName="timer-f" :customizedStyle="{width: '2rem', height: '2rem'}"
-        class="cursor" :class="{'activated': activatedIdx == 2}"></svg-icon>
+        class="cursor" :class="{'activate': activateIdx == 2}"></svg-icon>
     </n-grid-item>
     <n-grid-item @click="showUserView">
       <svg-icon iconName="user-fill" :customizedStyle="{width: '2rem', height: '2rem'}"
-        class="cursor" :class="{'activated': activatedIdx == 3}"></svg-icon>
+        class="cursor" :class="{'activate': activateIdx == 3}"></svg-icon>
     </n-grid-item>
   </n-grid>
 </template>
@@ -27,13 +27,13 @@ export default {
   name: 'TodoFooter',
   setup() {
     const state = reactive({
-      activatedIdx: 0, // 0-3表示第几个激活的底部图标
+      activateIdx: 0, // 0-3表示第几个激活的底部图标
     })
 
     const router = useRouter();
     const routes = ['ListView', 'DataView', 'FocusView'];
     const selectPage = (index) => {
-      state.activatedIdx = index;
+      state.activateIdx = index;
       router.push({ name: routes[index] });
     } 
     const showUserView = () => { 
@@ -57,7 +57,7 @@ export default {
     }
   }
 }
-.activated {
+.activate {
   color: rgb(34, 20, 216) !important; 
 }
 </style>

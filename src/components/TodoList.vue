@@ -117,7 +117,8 @@ export default {
     provide('handleTodoCheck', handleTodoCheck);
     
     return {
-      todos
+      todos,
+      createTodoItem
     }
 }
 };

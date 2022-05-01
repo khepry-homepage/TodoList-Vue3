@@ -20,7 +20,7 @@ export default {
           height: '1rem',
         }
       },
-      type: Object
+      type: [String, Object] 
     }
   },
   setup(props) {
