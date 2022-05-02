@@ -20,20 +20,21 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import emitter from 'utils/eventbus.js'
 export default {
   name: 'TodoFooter',
   setup() {
+    const store = useStore();
     const state = reactive({
-      activateIdx: 0, // 0-3表示第几个激活的底部图标
+      activateIdx: computed(() => store.state.activateIdx), // 0-3表示第几个激活的底部图标
     })
 
     const router = useRouter();
-    const routes = ['ListView', 'DataView', 'FocusView'];
+    const routes = ['ListView', 'DataChartView', 'FocusView'];
     const selectPage = (index) => {
-      state.activateIdx = index;
       router.push({ name: routes[index] });
     } 
     const showUserView = () => { 

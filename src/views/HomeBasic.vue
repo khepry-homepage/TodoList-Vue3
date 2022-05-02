@@ -17,17 +17,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.title {
-  width: 100%;
-  padding-left: 2rem;
-  text-align: left;
-  color: rgb(243, 243, 243);
-  font-size: 2rem;
-  &::before {
-    font-family: "iconfont" !important;
-    content: "\e61c";
-  }
-}
 .todo-header {
   height: 10rem;
 }

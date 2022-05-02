@@ -7,11 +7,11 @@
         </div>
         <n-card :bordered="false" size="small" class="user-info">
           <n-layout has-sider>
-            <n-layout-sider width="30%">
+            <n-layout-sider :width="120">
               <n-avatar
                 round
-                size="big"
-                src="../assets/error.jpg"
+                :size="120"
+                :src="avatarSrc"
                 fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
               />
             </n-layout-sider>
@@ -26,8 +26,26 @@
       </template>
       <template v-slot:default>
         <n-card class="options-menu">
-          <n-space id="avatar" class="cursor">
+          <n-space id="avatar" class="cursor" @click="showModal = !showModal">
             更换头像
+            <n-modal v-model:show="showModal"
+                preset="dialog"
+                title="修改头像"
+                positive-text="确认"
+                negative-text="取消"
+                @positive-click="onPositiveClick"
+                @negative-click="onNegativeClick">
+              <template #default>
+                <n-upload
+                  v-model:file-list="fileList"
+                  list-type="image-card"
+                  :max="1"
+                >
+                  点击上传
+                </n-upload>
+                <n-divider />
+              </template>              
+            </n-modal>
           </n-space>
           <n-space id="guide" class="cursor">
             新手指南
@@ -56,7 +74,11 @@ export default {
       active.value = true;
       placement.value = place;
     };
-    
+    const showModalRef = ref(false);
+    const avatarSrc = ref("../assets/error.jpg");
+    const fileList = ref([]);
+
+
     emitter.on('showUserView', activate);
     onBeforeUnmount(() => {
       emitter.off('showUserView', activate);
@@ -64,7 +86,26 @@ export default {
     return {
       active,
       placement,
-      activate
+      fileList,
+      avatarSrc,
+      showModal: showModalRef,
+      activate,
+      onNegativeClick() {
+        showModalRef.value = false;
+      },
+      onPositiveClick() {
+        /* to do */
+        if (!fileList.value.length) return;
+        let reader = new FileReader();
+        let file = fileList.value[0].file;
+        reader.readAsDataURL(file);
+
+        reader.onload = function () {
+          avatarSrc.value = reader.result;
+          showModalRef.value = false; 
+        }
+        
+      },
     };
   }
 };

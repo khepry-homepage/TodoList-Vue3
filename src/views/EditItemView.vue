@@ -5,6 +5,7 @@
     :placement="placement"
     :trap-focus="false"
     to="#drawer-target"
+    :on-after-leave="closeEditWindow"
   >
     <n-drawer-content class="drawer-custom-class">
       <template v-slot:header>
@@ -13,7 +14,7 @@
           <svg-icon iconName="ok" class="cursor" :customizedStyle="{width: '1.5rem', height: '1.5rem'}"
             @click="affirmModifyTodo()"></svg-icon>
           <svg-icon iconName="cancel" class="cursor" :customizedStyle="{width: '1.5rem', height: '1.5rem'}"
-            @click="closeEditWindow"></svg-icon>
+            @click="active = false"></svg-icon>
         </div>
       </template>
       <template v-slot:default>

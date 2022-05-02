@@ -99,8 +99,10 @@ export default {
 }
 .main-item {
   position: relative;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   .item-check {
+    display: inline-flex;
+    align-items: center;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     vertical-align: middle;
@@ -136,6 +138,7 @@ export default {
 .todo-time {
   padding-left: 2rem;
   border-bottom: 1px dashed rgb(124, 123, 123);
+  font-size: 1.2rem;
   .week, .time, .alarm {
     display: inline-block;
     text-align: left;

@@ -18,7 +18,6 @@
 <script>
 import { defineComponent, reactive, toRefs, computed, onMounted, onUnmounted } from 'vue'
 export default defineComponent({
-  components: {},
   props: {
     currTime: {
       require: true,
@@ -105,7 +104,7 @@ export default defineComponent({
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: cadetblue;
+  background: url("../assets/lock_background.gif") no-repeat center/cover;
   :deep(.n-space) {
     margin-top: 1rem !important;
   }

@@ -22,11 +22,11 @@ export default {
 <style lang="scss" scoped>
 .title {
   width: 100%;
-  padding-left: 2rem;
   text-align: left;
   color: rgb(243, 243, 243);
   font-size: 2rem;
   &::before {
+    margin-left: 1rem;
     font-family: "iconfont" !important;
     content: "\e61c";
   }

@@ -6,6 +6,7 @@ const store = createStore({
       LOCK_STATE: false,
       currTime: null,
       maxMinute: null,
+      activateIdx: 0, // 导航索引
     }
   },
   mutations: {
@@ -25,6 +26,9 @@ const store = createStore({
       state.currTime = null;
       state.maxMinute = null;
       window.sessionStorage.setItem('store', JSON.stringify(state));
+    },
+    setNavIdx(state, index) {
+      state.activateIdx = index;
     }
   }
 })

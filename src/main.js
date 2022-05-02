@@ -8,6 +8,8 @@ import "./assets/iconfont.js"
 import plugins from './utils/plugins.js'
 import SvgIcon from './components/SvgIcon.vue'
 
+
+
 const app = createApp(App)
 app.use(naive)
 app.use(plugins)
