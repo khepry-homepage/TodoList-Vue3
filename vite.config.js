@@ -14,9 +14,20 @@ export default defineConfig({
       'components': resolve(__dirname, '.', 'src/components'),
       'views': resolve(__dirname, '.', 'src/views'),
       'store': resolve(__dirname, '.', 'src/store'),
+      'api': resolve(__dirname, '.', 'src/api'),
       'utils': resolve(__dirname, '.', 'src/utils'),
       'router': resolve(__dirname, '.', 'src/router'),
     },
   },
-  outDir: 'dist'
+  server: {
+    host: '0.0.0.0',
+    proxy: {
+      // 选项写法
+      '/api': {
+        target: 'http://106.15.177.150:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    }
+  }
 })

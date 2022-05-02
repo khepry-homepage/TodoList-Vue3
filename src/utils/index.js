@@ -1,3 +1,5 @@
+import cookies from './cookie.js'
+
 function getDiffDays(dateStr1, dateStr2) {
   const date1 = new Date(dateStr1)
   const date2 = new Date(dateStr2)
@@ -36,4 +38,4 @@ function jsDateFormatter( dateInput ) {  // dateInput 是一个 js 的 Date 对�
   return `${year}-${month}-${theDate} ${hour}:${minute}:${second}`;
 }
 
-export { getDiffDays, jsDateFormatter }
+export { getDiffDays, jsDateFormatter, cookies }
