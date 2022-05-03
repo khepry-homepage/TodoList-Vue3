@@ -1,39 +1,5 @@
 export default {
   install(Vue) {
-    function jsDateFormatter( dateInput ) {  // dateInput 是一个 js 的 Date 对象
-      var year = dateInput.getFullYear();
-      var month = dateInput.getMonth() + 1;
-      var theDate = dateInput.getDate();
-
-      var hour = dateInput.getHours();
-      var minute = dateInput.getMinutes();
-      var second = dateInput.getSeconds();
-
-      if ( month < 10 ) {undefined
-          month = '0' + month;
-      }
-
-      if ( theDate < 10 ) {undefined
-          theDate = '0' + theDate;
-      }
-
-      if ( hour < 10 ) {undefined
-          hour = '0' + hour;
-      }
-
-      if ( minute < 10 ) {undefined
-          minute = '0' + minute;
-      }
-
-      if ( second < 10 ) {undefined
-          second = '0' + second;
-      }
-
-      return year +"-"+ month +"-" + theDate + " "+ hour +":"+ minute +":"+ second;
-    }
-
-
-
     // 对Date的扩展，将 Date 转化为指定格式的String
     // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
     // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 

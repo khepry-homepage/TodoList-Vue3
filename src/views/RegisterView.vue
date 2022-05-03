@@ -55,8 +55,8 @@
 <script>
 import { defineComponent, reactive, toRefs } from 'vue'
 import { useMessage } from "naive-ui";
+import { api } from 'utils/index.js'
 import AccessBasic from './AccessBasic.vue';
-import api from 'api/index.js'
 export default defineComponent({
   components: { AccessBasic },
   setup() {

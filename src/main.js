@@ -1,14 +1,87 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import naive from 'naive-ui'
-import store from'./store/index.js'
-import router from './router/index.js'
-import './assets/iconfont.css'
-import "./assets/iconfont.js"
-import plugins from './utils/plugins.js'
+import '@/assets/iconfont.css'
+import "@/assets/iconfont.js"
+
 import SvgIcon from './components/SvgIcon.vue'
+import { store, router, plugins } from './utils/index.js'
 
+import {
+  // create naive ui
+  create,
+  // component
+  NButton,
+  NDrawer,
+  NDrawerContent,
+  NModal,
+  NForm,
+  NFormItem,
+  NSpace,
+  NScrollbar,
+  NCard,
+  NDatePicker,
+  NDivider,
+  NAvatar,
+  NInput,
+  NEllipsis,
+  NInputNumber,
+  NRadio,
+  NRadioGroup,
+  NSelect,
+  NCheckbox,
+  NCheckboxGroup,
+  NSwitch,
+  NUpload,
+  NMessageProvider,
+  NConfigProvider,
+  NLayout,
+  NLayoutHeader,
+  NLayoutContent,
+  NLayoutFooter,
+  NLayoutSider,
+  NGrid,
+  NGridItem,
+  NTooltip,
+  NPopconfirm,
+} from 'naive-ui'
 
+const naive = create({
+  components: [
+    NButton,
+    NDrawer,
+    NDrawerContent,
+    NModal,
+    NForm,
+    NFormItem,
+    NSpace,
+    NScrollbar,
+    NCard,
+    NDatePicker,
+    NDivider,
+    NAvatar,
+    NInput,
+    NEllipsis,
+    NInputNumber,
+    NRadio,
+    NRadioGroup,
+    NSelect,
+    NCheckbox,
+    NCheckboxGroup,
+    NSwitch,
+    NUpload,
+    NMessageProvider,
+    NConfigProvider,
+    NLayout,
+    NLayoutHeader,
+    NLayoutContent,
+    NLayoutFooter,
+    NLayoutSider,
+    NGrid,
+    NGridItem,
+    NTooltip,
+    NPopconfirm,
+  ]
+})
 
 const app = createApp(App)
 app.use(naive)

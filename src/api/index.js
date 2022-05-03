@@ -1,6 +1,6 @@
 import initInterceptors from './interceptors/index.js'
 import axios from 'axios'
-import store from '../store/index.js';
+import { store } from '../utils/index.js';
 
 
 const request = axios.create({
@@ -21,7 +21,8 @@ const api = {
   updateUser: '/user/updateUser',
   addTodo: '/todo/addTodo',
   uploadImage: '/user/uploadImage',
-  downloadImage: '/user/downloadImage'
+  downloadImage: '/user/downloadImage',
+  completedTodo: '/statistic/completionOfCategory',
 }
 
 function refreshToken({ token }) {
@@ -89,11 +90,23 @@ const user = {
   }
 }
 
+
 const todo = {
   addTodo(item) {
     return request({
       url: api.addTodo,
       data: { ...item },
+    })
+  },
+  completedTodo(range) {
+    let [ startTime, endTime ] = range;
+    return request({
+      url: api.completedTodo,
+      data: {
+        userId: 2,
+        startTime,
+        endTime
+      }
     })
   }
 }

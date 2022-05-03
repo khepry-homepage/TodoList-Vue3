@@ -1,15 +1,14 @@
 
-import Home from 'views/Home.vue'
-import App from '@/App.vue'
-import LoginView from 'views/LoginView.vue'
-import RegisterView from 'views/RegisterView.vue'
-import ListView from 'views/ListView.vue'
-import DataChartView from 'views/DataChartView.vue'
-import FocusView from 'views/FocusView.vue'
+const App = () => import('@/App.vue') 
+
+const Home = () => import('@/views/Home.vue') 
+const LoginView = () => import('@/views/LoginView.vue') 
+const RegisterView = () => import('@/views/RegisterView.vue') 
+const ListView = () => import('@/views/ListView.vue') 
+const DataChartView = () => import('@/views/DataChartView.vue') 
+const FocusView = () => import('@/views/FocusView.vue')
 import { createRouter, createWebHashHistory } from 'vue-router'
-import store from '../store/index.js'
-import { cookies } from '../utils/index.js'
-import api from '../api/index.js'
+import { cookies, api, store } from '../utils/index.js'
 
 const routes = [
   { 

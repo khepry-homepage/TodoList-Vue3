@@ -28,8 +28,7 @@
 
 <script>
 import { computed, toRefs, toRaw, provide, inject, defineComponent } from 'vue'
-import emitter from 'utils/eventbus.js'
-import { getDiffDays } from 'utils/index.js'
+import { getDiffDays, emitter } from 'utils/index.js'
 import SubTodo from './SubTodo.vue'
 export default defineComponent({
   components: { SubTodo },

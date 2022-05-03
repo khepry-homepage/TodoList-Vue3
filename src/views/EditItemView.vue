@@ -103,11 +103,10 @@
 <script>
 import { reactive, toRefs, toRaw, onUnmounted, defineComponent } from 'vue'
 import { nanoid } from 'nanoid'
-import emitter from 'utils/eventbus.js'
+import { emitter } from 'utils/index.js'
 import DragButton from 'components/DragButton.vue';
 import cloneDeep from 'lodash/cloneDeep'
 export default defineComponent({
-  name: 'EditItemView',
   components: { DragButton },
   props: {
     createTodoItem: {

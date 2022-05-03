@@ -41,11 +41,10 @@
 <script>
 import { defineComponent, reactive, toRefs } from 'vue'
 import { useMessage } from "naive-ui";
-import AccessBasic from './AccessBasic.vue';
-import { cookies } from 'utils/index.js'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import api from 'api/index.js'
+import { cookies, api } from 'utils/index.js'
+import AccessBasic from './AccessBasic.vue';
 
 export default defineComponent({
   components: { AccessBasic },

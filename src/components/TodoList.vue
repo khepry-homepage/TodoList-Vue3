@@ -8,7 +8,6 @@
 <script>
 import { provide, reactive, defineComponent } from 'vue'
 import { nanoid } from 'nanoid'
-import { jsDateFormatter } from 'utils/index.js'
 import { useStore } from 'vuex'
 import TodoItem from './TodoItem.vue'
 import EditItemView from 'views/EditItemView.vue'
@@ -84,15 +83,15 @@ export default defineComponent({
       }
       let alarmTime = null;
       if (todo.alarmTime) {
-        alarmTime = [jsDateFormatter(new Date(todo.alarmTime)), jsDateFormatter(new Date(startTime))];
+        alarmTime = [new Date(todo.alarmTime).Format('yyyy-MM-dd hh:mm:ss'), new Date(startTime).Format('yyyy-MM-dd hh:mm:ss')];
       }
 
       target.userId = store.state.userInfo.userId;
       target.id = todo.id;
       target.categoryName = todo.categoryName;
       target.content = todo.content;
-      target.startTime = jsDateFormatter(new Date(startTime));
-      target.endTime = jsDateFormatter(new Date(endTime));
+      target.startTime = new Date(startTime).Format('yyyy-MM-dd hh:mm:ss');
+      target.endTime = new Date(endTime).Format('yyyy-MM-dd hh:mm:ss');
       target.subtodos = todo.subtodos;
       target.alarmTime = alarmTime;
       target.repetition = repetition;

@@ -24,7 +24,7 @@ import { reactive, toRefs, computed, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import throttle from 'lodash/throttle'
-import emitter from 'utils/eventbus.js'
+import { emitter } from 'utils/index.js'
 export default defineComponent({
   setup() {
     const store = useStore();

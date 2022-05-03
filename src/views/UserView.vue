@@ -96,12 +96,10 @@
 
 <script>
 import { onBeforeUnmount, reactive, computed, toRefs, defineComponent } from "vue";
-import emitter from 'utils/eventbus.js'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 import { useMessage } from 'naive-ui';
-import api from 'api/index.js'
-import { cookies } from 'utils/index.js'
+import { cookies, emitter, api } from 'utils/index.js'
 
 export default defineComponent({
   setup() {

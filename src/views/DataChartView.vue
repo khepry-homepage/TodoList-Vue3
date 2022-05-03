@@ -15,7 +15,7 @@
                     :is-date-disabled="disablePreviousDate" />
         </template>
         <template #footer>
-          <n-button size="large" type="primary" round strong :disabled="!range">
+          <n-button size="large" type="primary" round strong :disabled="!range" @click="queryCompletedTodo">
             查看事项完成情况
           </n-button>
         </template>
@@ -28,8 +28,9 @@
 
 <script>
 import { defineComponent, toRefs, reactive, onMounted } from 'vue'
-import echarts from 'utils/echarts.js'
+import { echarts, api } from 'utils/index.js'
 import HomeBasic from './HomeBasic.vue'
+import throttle from 'lodash/throttle'
 
 export default defineComponent({
   components: { HomeBasic },
@@ -37,66 +38,60 @@ export default defineComponent({
     const state = reactive({
       pieChartRef: null,
       range: [Date.now(), Date.now()],
-      config: {
-          series: [{
-              type: 'pie',
-              data: [
-                {
-                  value: 335, //饼状图默认显示数据
-                  name: '生活',
-                  isDone: 320,
-                },
-                {
-                  value: 234,
-                  name: '学习',
-                  isDone: 220,
-                },
-                {
-                  value: 1548,
-                  name: '工作',
-                  isDone: 1500,                    
-                }
-              ],
-              radius: '50%',
-              label: {  //修改labelline尾端显示的label的值
-                show: true,
-                formatter: '{b}({d})%',
-                fontSize: 10,
-              }
-            }
-          ],
-          legend: {
-            orient: 'vertical',
-            left: 'left'
-          },
-          title: {
-            // text: '主标题',
-            subtext: '过去事项完成情况',
-            left: 'center'
-          },        
-          tooltip: {
-            trigger: 'item',
-            formatter: (params)=>{
-              for (let idx in state.config.series) {
-                let dataIdx = params.dataIndex
-                let data = state.config.series[idx].data[dataIdx]
-                //es6新增字符串写法: `${js表达式}`
-                return `已完成:${data.isDone}(${(data.isDone*100/data.value).toFixed(2)}%)</br>总数:${data.value}`
-              }
-            }
-          },
-      },
-
     })
-    const drawPieChart = () => {
+    const config = {
+      series: [{
+          type: 'pie',
+          data: [],
+          radius: '50%',
+          label: {  //修改labelline尾端显示的label的值
+            show: true,
+            formatter: '{b} ({d}%)',
+            fontSize: 16,
+          }
+        }
+      ],
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      title: {
+        subtext: '过去事项完成情况',
+        left: 'center'
+      },        
+      tooltip: {
+        trigger: 'item',
+        formatter: (params)=>{
+          return `已完成: ${params.data?.complete} (${(params.data?.complete*100 / params.data?.value).toFixed(2)}%) </br>总数: ${params.data?.value}`
+        }
+      },
+    }
+    let myChart = null;
+    const queryCompletedTodo = throttle(() => {
+      let [ startTime, endTime ] = state.range;
+      let range = [new Date(startTime).Format('yyyy-MM-dd hh:mm:ss'), new Date(endTime).Format('yyyy-MM-dd hh:mm:ss')];
+      api.todo.completedTodo(range)
+        .then(res => {
+          let data = [];
+          for (let ct of Object.values(res.data)) {
+            let category = Object.create({});
+            category.value = ct.total;
+            category.complete = ct.complete;
+            category.name = ct.categoryName;
+            category.id = ct.categoryId;
+            data.push(category);
+          }
+          
+          let option = myChart.getOption();
+          option.series[0].data = data;     
+          myChart.setOption(option);
+        })
+    }, 2000)
+
+    onMounted(() => {
+      myChart = echarts.init(state.pieChartRef);
       // 接下来的使用就跟之前一样，初始化图表，设置配置项
-      let myChart = echarts.init(state.pieChartRef);
-      myChart.setOption({
-        series: state.config.series,
-        tooltip: state.config.tooltip,
-        legend: state.config.legend,
-        title: state.config.title,
-      });
+      myChart.setOption(config);
       myChart.on('mouseover', (params)=> {
         myChart.dispatchAction({
           type: 'showTip',
@@ -107,18 +102,14 @@ export default defineComponent({
       window.onresize = function() {
         myChart.resize();
       };
-      myChart.resize();
-    }
-
-    onMounted(() => {
-      drawPieChart();
     })
 
     return {
       ...toRefs(state),
       disablePreviousDate(ts) {
         return ts > Date.now();
-      }
+      },
+      queryCompletedTodo
     }
   }
 });
