@@ -5,9 +5,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-export default {
-  name: 'SvgIcon',
+import { computed, defineComponent } from 'vue'
+export default defineComponent({
   props: {
     iconName: {
       require: true,
@@ -27,7 +26,7 @@ export default {
     const name = computed(() => `#todo-${props.iconName}`);
     return { name }
   }
-};
+});
 </script>
 <style lang="scss" scoped>
 .icon {

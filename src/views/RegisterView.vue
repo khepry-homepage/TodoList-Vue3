@@ -56,7 +56,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 import { useMessage } from "naive-ui";
 import AccessBasic from './AccessBasic.vue';
-
+import api from 'api/index.js'
 export default defineComponent({
   components: { AccessBasic },
   setup() {
@@ -78,7 +78,7 @@ export default defineComponent({
       state.registerForm.usernameStatus = re1.test(username) ? 'success' :
         state.registerForm.usernameStatus = re2.test(username) ? null : 'error';
 
-      if (state.registerForm.usernameStatus != 'success')  message.info("用户名由字母数字组成且必须以字母开头");
+      if (state.registerForm.usernameStatus != 'success')  message.error("用户名由字母数字组成且必须以字母开头");
     }
     const checkPassword = (password) => {
       let re1 = new RegExp("^[a-zA-Z][a-zA-Z0-9]*$");
@@ -86,36 +86,29 @@ export default defineComponent({
 
       state.registerForm.passwordStatus = re1.test(password) ? 'success' :
         state.registerForm.passwordStatus = re2.test(password) ? null : 'error';
-      if (state.registerForm.passwordStatus != 'success')  message.info("密码由字母数字组成");
+      if (state.registerForm.passwordStatus != 'success')  message.error("密码由字母数字组成");
     }
     const checkConfirmPassword = (confirmPassword) => {
       state.registerForm.confirmPasswordStatus = confirmPassword == state.registerForm.password ? 'success' : 'error';
-      if (state.registerForm.passwordStatus != 'success')  message.info("确保两次输入的密码一致");
+      if (state.registerForm.confirmPasswordStatus != 'success')  message.error("确保两次输入的密码一致");
     }
 
     const register = () => {
-      // let registerForm = this.registerForm;
-      // if (registerForm.username === '' || registerForm.password === '') {
-      //   alert('账号或密码不能为空');
-      // } else {
-      //   let option = {
-      //     url: 'http://192.168.11.110:8080/api/login',
-      //     data: registerForm
-      //   }
-      //   this.$getData(option, (res)=>{
-      //     if (!res.success) {
-      //       throw new Error('无法通过验证，请确保账号已注册')
-      //     }
-      //     let token = {
-      //       accessToken: res.data.accessToken,
-      //       refreshToken: res.data.refreshToken,
-      //     }
-      //     // let url = 'http://40.65.153.77' // 暴露token的域名(发布版本)
-      //     let url = 'http://192.168.11.110'
-      //     this.$setCookie('token', token, 2, url, true)  // token有效期为2天
-      //     this.$router.push('/todo/item')
-      //   }, (err)=>{alert('账号或密码错误')})
-      // }  
+      let registerForm = state.registerForm;
+      // 校验
+      checkUsername(registerForm.username);
+      checkPassword(registerForm.password);
+      checkConfirmPassword(registerForm.confirmPassword);
+      if (registerForm.usernameStatus == 'success' && registerForm.passwordStatus == 'success' && registerForm.confirmPasswordStatus == 'success') {
+        api.register({ registerForm: state.registerForm })
+          .then(res => {
+            if (res.code != 200) {
+              message.error("注册失败, 已存在相同用户");
+              return;
+            }
+            message.success("注册成功, 请返回登录");
+          })
+      }
     }
 
     return {

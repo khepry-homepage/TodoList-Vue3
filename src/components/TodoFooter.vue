@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import { reactive, toRefs, computed } from 'vue'
+import { reactive, toRefs, computed, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import throttle from 'lodash/throttle'
 import emitter from 'utils/eventbus.js'
-export default {
-  name: 'TodoFooter',
+export default defineComponent({
   setup() {
     const store = useStore();
     const state = reactive({
@@ -34,9 +34,9 @@ export default {
 
     const router = useRouter();
     const routes = ['ListView', 'DataChartView', 'FocusView'];
-    const selectPage = (index) => {
+    const selectPage = throttle((index) => {
       router.push({ name: routes[index] });
-    } 
+    }, 500);
     const showUserView = () => { 
       emitter.emit('showUserView');
     }
@@ -46,7 +46,7 @@ export default {
       showUserView
     }
   }
-};
+});
 </script>
 <style lang="scss" scoped>
 .n-grid {

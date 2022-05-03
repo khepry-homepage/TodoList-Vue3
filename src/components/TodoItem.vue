@@ -27,12 +27,11 @@
 </template>
 
 <script>
-import SubTodo from './SubTodo.vue'
-import { computed, toRefs, toRaw, provide, inject } from 'vue'
+import { computed, toRefs, toRaw, provide, inject, defineComponent } from 'vue'
 import emitter from 'utils/eventbus.js'
 import { getDiffDays } from 'utils/index.js'
-export default {
-  name: 'TodoItem',
+import SubTodo from './SubTodo.vue'
+export default defineComponent({
   components: { SubTodo },
   props: {
     todo: {
@@ -79,8 +78,8 @@ export default {
       handleTodoCheck,
       handleEditTodo
     }
-}
-};
+  }
+});
 </script>
 <style lang="scss" scoped>
 .todo-content, 

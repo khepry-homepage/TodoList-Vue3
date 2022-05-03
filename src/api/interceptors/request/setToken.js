@@ -1,5 +1,9 @@
+import { cookies } from '../../../utils/index.js'
 const setToken = config => {
-  config.headers.TOKEN = window.localStorage.getItem('token');
+  let token = cookies.get('token');
+  if (token) {
+    config.headers.TOKEN = token.value.accessToken;
+  }
   return config;
 }
 

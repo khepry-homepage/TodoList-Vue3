@@ -12,12 +12,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import HomeBasic from './HomeBasic.vue'
 import TodoList from 'components/TodoList.vue'
-export default {
-  name: 'ListView',
+export default defineComponent({
   components: { HomeBasic, TodoList },
-};
+});
 </script>
 <style lang="scss" scoped>
 .title {

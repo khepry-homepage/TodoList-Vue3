@@ -9,12 +9,13 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import WeekDate from 'components/WeekDate.vue'
 
-export default {
+export default defineComponent({
   name: 'HomeBasic',
   components: { WeekDate },
-};
+});
 </script>
 <style lang="scss" scoped>
 .todo-header {

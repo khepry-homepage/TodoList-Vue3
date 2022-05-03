@@ -5,9 +5,6 @@ import { resolve } from 'path' // 主要用于alias文件路径别名
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  server: {
-    host: '0.0.0.0'
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, '.', 'src'),

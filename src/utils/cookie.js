@@ -28,10 +28,14 @@ function get(cName) {
     return undefined;
   }  
 }
+function remove(cName) {
+  cookies.remove(cName);
+}
 
 export default {
   set,
-  get
+  get,
+  remove,
 }
 
 

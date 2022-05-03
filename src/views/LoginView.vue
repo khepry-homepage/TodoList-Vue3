@@ -44,6 +44,7 @@ import { useMessage } from "naive-ui";
 import AccessBasic from './AccessBasic.vue';
 import { cookies } from 'utils/index.js'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import api from 'api/index.js'
 
 export default defineComponent({
@@ -51,6 +52,7 @@ export default defineComponent({
   setup() {
     const message = useMessage();
     const router = useRouter();
+    const store = useStore();
     const state = reactive({
       loginForm: {
         usernameStatus: 'null',
@@ -66,7 +68,7 @@ export default defineComponent({
       state.loginForm.usernameStatus = re1.test(username) ? 'success' :
         state.loginForm.usernameStatus = re2.test(username) ? null : 'error';
 
-      if (state.loginForm.usernameStatus != 'success')  message.info("用户名由字母数字组成且必须以字母开头");
+      if (state.loginForm.usernameStatus != 'success')  message.error("用户名由字母数字组成且必须以字母开头");
     }
     const checkPassword = (password) => {
       let re1 = new RegExp("^[a-zA-Z][a-zA-Z0-9]*$");
@@ -74,14 +76,14 @@ export default defineComponent({
 
       state.loginForm.passwordStatus = re1.test(password) ? 'success' :
         state.loginForm.passwordStatus = re2.test(password) ? null : 'error';
-      if (state.loginForm.passwordStatus != 'success')  message.info("密码由字母数字组成");
+      if (state.loginForm.passwordStatus != 'success')  message.error("密码由字母数字组成");
     }
 
     const login = () => {
       api.login({ loginForm: state.loginForm })
         .then(res => {
           if (res.code != 200) {
-            message.info(res.msg);
+            message.error(res.msg);
             return;
           }
           let token = {
@@ -90,6 +92,10 @@ export default defineComponent({
           }
           let domain = 'localhost';
           cookies.set('token', token, 2, domain, false)  // token有效期为2天
+          return Promise.all([api.user.getUser(), api.user.downloadImage()]);
+        })
+        .then(([res1, res2]) => {
+          store.commit('initialLoginState', { userInfo: res1.data, userImage: res2.data });
           router.push({ name: 'ListView' });
         })
     }

@@ -1,6 +1,6 @@
 <template>
   <n-grid :cols="7">
-    <n-grid-item v-for="(date, week, index) in weekDates" :key="week">
+    <n-grid-item v-for="(date, week, index) in weekDate" :key="week">
       <n-grid :cols="1">
         <n-grid-item class="todo-week">
           {{week}}
@@ -16,31 +16,31 @@
 </template>
 
 <script>
-export default {
-  name: 'WeekDate',
-  data() {
-    return {
-    };
-  },
-  computed: {
-    today() {
+import { defineComponent, computed } from 'vue'
+export default defineComponent({
+  setup() {
+    const today = computed(() => {
       let index = new Date().getDay()
-      return index === 0 ? 7 : index
-    },
-    weekDates() {
-      let obj = {Mon: '', Tues: '', Wed: '', Thur: '', Fri: '', Sat: '', Sun: ''}
+      return index === 0 ? 7 : index;
+    })  
+    const weekDate = computed(() => {
+      let weeks = {Mon: '', Tues: '', Wed: '', Thur: '', Fri: '', Sat: '', Sun: ''}
       const date = new Date()
       let idendity = date.getDay(); //0-6表示星期日-星期六
       idendity = idendity === 0 ? 7 : idendity
       let index = 1;
-      for (let i in obj) {
-        obj[i] = new Date(date.getTime() + (index - idendity) * 86400000).getDate()
+      for (let i in weeks) {
+        weeks[i] = new Date(date.getTime() + (index - idendity) * 86400000).getDate()
         ++index
       }
-      return obj
+      return weeks
+    })
+    return {
+      today,
+      weekDate
     }
   }
-}
+});
 </script>
 
 <style lang="scss" scoped>

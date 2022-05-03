@@ -5,9 +5,10 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'DragButton',
-  setup(props) {
+  setup() {
     let dragbox = null;
     let cloneDragbox = null;
     let maxOffsetX = null;
@@ -63,7 +64,7 @@ export default {
       dragend,
     }
   }
-};
+});
 </script>
 <style scoped>
 #drag-box {

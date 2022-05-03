@@ -14,13 +14,9 @@
       </template>
     </n-card>
   </div>
-  
 </template>
 
-<script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({})
+<script setup>
 </script>
 
 <style lang="scss" scoped>

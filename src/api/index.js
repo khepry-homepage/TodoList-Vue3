@@ -1,5 +1,6 @@
 import initInterceptors from './interceptors/index.js'
 import axios from 'axios'
+import store from '../store/index.js';
 
 
 const request = axios.create({
@@ -16,11 +17,15 @@ const api = {
   refreshToken: '/token/refresh',
   login: '/login',
   register: '/register',
+  getUser: '/user/getUser',
+  updateUser: '/user/updateUser',
+  addTodo: '/todo/addTodo',
+  uploadImage: '/user/uploadImage',
+  downloadImage: '/user/downloadImage'
 }
 
 function refreshToken({ token }) {
-  if (!(token.refreshToken && token.accessToken)) return null;
-
+  if (!(token?.refreshToken && token?.accessToken)) return Promise.resolve(null);
   return request({
     url: api.refreshToken,
     data: {
@@ -53,8 +58,51 @@ function register({ registerForm }) {
 }
 
 
+const user = {
+  getUser() {
+    return request({
+      url: api.getUser
+    });
+  },
+  updateUser({ userInfo }) {
+    return request({
+      url: api.updateUser,
+      data: {
+        id: store.state.userId,
+        nickname: userInfo.nickname
+      }
+    });
+  },
+  uploadImage({base64Image, userId }) {
+    return request({
+      url: api.uploadImage,
+      data: {
+        base64Image,
+        userId
+      }
+    })
+  },
+  downloadImage() {
+    return request({
+      url: api.downloadImage
+    })
+  }
+}
+
+const todo = {
+  addTodo(item) {
+    return request({
+      url: api.addTodo,
+      data: { ...item },
+    })
+  }
+}
+
+
 export default {
   refreshToken,
   login,
   register,
+  user,
+  todo
 }

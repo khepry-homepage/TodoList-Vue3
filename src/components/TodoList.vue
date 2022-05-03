@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import { provide, reactive } from 'vue'
+import { provide, reactive, defineComponent } from 'vue'
 import { nanoid } from 'nanoid'
 import { jsDateFormatter } from 'utils/index.js'
+import { useStore } from 'vuex'
 import TodoItem from './TodoItem.vue'
 import EditItemView from 'views/EditItemView.vue'
-export default {
-  name: 'TodoList',
+export default defineComponent({
   components: { TodoItem, EditItemView },
   setup() {
     const todos = reactive([
@@ -45,6 +45,7 @@ export default {
           "repetition": 4
         }
       ]);
+    const store = useStore();
 
     todos.forEach(todo => {
       todo.subtodos = JSON.parse(todo.subtodos);
@@ -57,22 +58,23 @@ export default {
      * flag: 1 表示修改原有事项
      */
     const createTodoItem = ({ flag, todo }) => {
-      let wrapTodo = Object.create(null);
-      wrapTodo({ todo, wrapTodo });
+      let target = Object.create(null);
+      wrapTodo({ todo, target });
       if (flag == 0) {
-        todos.push(wrapTodo);
+        todos.push(target);
       }
       else {
         todos.some(todo => {
-          if (todo.id == wrapTodo.id) {
-            Object.assign(todo, wrapTodo);
+          if (todo.id == target.id) {
+            Object.assign(todo, target);
             return true;
           }
         })
       }
     }
+
     // wrap the todo object
-    const wrapTodo = ({ todo, wrapTodo }) => {
+    const wrapTodo = ({ todo, target }) => {
       const [ startTime, endTime ] = todo.range; 
       let repetition = 0;
       if (todo.alarmDays) {
@@ -82,21 +84,25 @@ export default {
       }
       let alarmTime = null;
       if (todo.alarmTime) {
-        alarmTime = [[new Date(todo.alarmTime)], [new Date(startTime)]];
+        alarmTime = [jsDateFormatter(new Date(todo.alarmTime)), jsDateFormatter(new Date(startTime))];
       }
 
-      wrapTodo.id = todo.id;
-      wrapTodo.categoryName = todo.categoryName;
-      wrapTodo.content = todo.content;
-      wrapTodo.startTime = jsDateFormatter(new Date(startTime));
-      wrapTodo.endTime = jsDateFormatter(new Date(endTime));
-      wrapTodo.subtodos = todo.subtodos;
-      wrapTodo.alarmTime = alarmTime;
-      wrapTodo.repetition = repetition;
+      target.userId = store.state.userInfo.userId;
+      target.id = todo.id;
+      target.categoryName = todo.categoryName;
+      target.content = todo.content;
+      target.startTime = jsDateFormatter(new Date(startTime));
+      target.endTime = jsDateFormatter(new Date(endTime));
+      target.subtodos = todo.subtodos;
+      target.alarmTime = alarmTime;
+      target.repetition = repetition;
+
+      // to do
+      target.priority = 2;
     }
 
 
-    const handleTodoCheck = ( { id, subid, isCheck } ) => {
+    const handleTodoCheck = ({ id, subid, isCheck }) => {
       const todoIdx = todos.findIndex(todo => todo.id == id);
       if (todoIdx == -1)  return;
       // 设置子todo的完成状态
@@ -120,8 +126,8 @@ export default {
       todos,
       createTodoItem
     }
-}
-};
+  }
+});
 </script>
 <style lang="scss" scoped>
 .todo-list {

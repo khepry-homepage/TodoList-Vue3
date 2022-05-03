@@ -8,7 +8,7 @@
     <template #main>
       <n-card :bordered="false">
         <template #cover>
-          <img src="../assets/focus-background.jpeg">
+          <img src="../assets/focus_background.jpeg">
         </template>
       </n-card>
       <n-card title="暂别手机, 遇见更好的自己" class="description" header-style="color: rgb(77, 74, 74);font-size: 1.5rem;">
@@ -69,15 +69,14 @@
 </template>
 
 <script>
-import { reactive, toRefs, ref, computed } from 'vue'
+import { reactive, toRefs, ref, computed, defineComponent } from 'vue'
 import HomeBasic from './HomeBasic.vue'
 import LockScreen from './LockScreen.vue'
 import { useMessage } from "naive-ui";
 import { useStore } from 'vuex'
-export default {
-  name: 'FocusView',
+export default defineComponent({
   components: { HomeBasic, LockScreen },
-  setup(props) {
+  setup() {
     const store = useStore();
 
     const state = reactive({
@@ -102,7 +101,7 @@ export default {
         initialValue();
       },
       onPositiveClick() {
-        state.lockTimeOptions.push(state.value * 60);
+        state.lockTimeOptions.push(state.value);
         message.success("添加成功");
         showModalRef.value = false;
         initialValue();
@@ -112,7 +111,7 @@ export default {
       closeLockScreen() { store.commit('closeLockScreen') },
     }
   }
-};
+});
 </script>
 <style lang="scss" scoped>
 .title {

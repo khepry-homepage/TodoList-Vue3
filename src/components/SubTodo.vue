@@ -7,9 +7,8 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
-export default {
-  name:'SubTodo',
+import { toRefs, defineComponent } from 'vue'
+export default defineComponent({
   props:[ 'subtodo' ],
   inject: [ 'handleSubTodoCheck' ],
   setup(props) {
@@ -17,7 +16,7 @@ export default {
       ...toRefs(props)
     }
   }
-};
+});
 </script>
 <style lang="scss" scoped>
 .todo-subtodo {

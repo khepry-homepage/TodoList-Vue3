@@ -101,12 +101,12 @@
 </template>
 
 <script>
-import { reactive, toRefs, toRaw, onUnmounted } from 'vue'
+import { reactive, toRefs, toRaw, onUnmounted, defineComponent } from 'vue'
 import { nanoid } from 'nanoid'
 import emitter from 'utils/eventbus.js'
 import DragButton from 'components/DragButton.vue';
 import cloneDeep from 'lodash/cloneDeep'
-export default {
+export default defineComponent({
   name: 'EditItemView',
   components: { DragButton },
   props: {
@@ -207,7 +207,7 @@ export default {
 
     // 子任务输入框失焦时调用
     const inputSubTodo = () => {
-      if (state.subtodoInputValue == null || state.subtodoInputValue.trim() == '')  return;
+      if (!state.subtodoInputValue?.trim())  return;
       let content = state.subtodoInputValue.trim();
       addSubTodo({ content });
       state.subtodoInputValue = null;
@@ -247,10 +247,7 @@ export default {
       state.active = false;
     }
     const todoIsValid = () => {
-      if (!editContent.content || editContent.content == '' || editContent.range == null ) {
-        return false;
-      }
-      return true;
+      return editContent?.content && editContent?.range;
     }
 
 
@@ -267,7 +264,7 @@ export default {
       closeEditWindow
     };
   }
-};
+});
 </script>
 <style lang="scss" scoped>
 .edit-box {

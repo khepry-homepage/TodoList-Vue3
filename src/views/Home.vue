@@ -7,12 +7,12 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue'
 import TodoFooter from 'components/TodoFooter.vue'
 import UserView from 'views/UserView.vue'
-export default {
-  name: 'Home',
+export default defineComponent({
   components: { TodoFooter, UserView },
-};
+});
 </script>
 <style lang="scss" scoped>
 #home-page {
