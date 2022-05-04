@@ -19,7 +19,7 @@
       </template>
       <template v-slot:default>
         <div class="edit-box">
-            <n-space align="center" justify="center">
+            <n-space align="center" justify="center" :wrap="false">
               <n-input size="small" round placeholder="待办事项" v-model:value="content">
                 <template #suffix>
                   <span class="iconfont">
@@ -39,18 +39,18 @@
               <n-date-picker v-model:value="range" type="datetimerange" clearable input-readonly 
                 :is-date-disabled="disablePreviousDate"/>
             </n-space>
-            <n-space align="center" item-style="margin-left: 1rem;">
+            <n-space align="center" item-style="margin-left: 1rem;" :wrap="false">
               <n-tooltip trigger="hover">
                 <template #trigger>
                   <n-switch size="small" @update:value="handleSetAlarm" :default-value="alarmTime != null"/>
                 </template>
                 <span> 设置提醒 </span>
               </n-tooltip>
-              <n-space v-show="needAlarm" :inline="true">
+              <n-space v-show="needAlarm" :inline="true" :wrap="false">
                 <n-date-picker size="small" v-model:value="alarmTime" type="datetime" clearable input-readonly 
                   :is-date-disabled="disableDateRange" :disabled="!needAlarm || range == null"/>
                 <n-radio-group v-model:value="repetition" name="radiogroup">
-                  <n-space item-style="display: flex;" >
+                  <n-space item-style="display: flex;" :wrap="false">
                     <n-radio v-for="times in alarmTimes" :key="times" :value="times">
                       {{ times }}
                     </n-radio>
@@ -58,7 +58,7 @@
                 </n-radio-group>       
               </n-space>   
             </n-space>
-            <n-space align="center">
+            <n-space align="center" :wrap="false">
               <n-select v-model:value="repeatState" :options="options" />
               <n-checkbox-group v-model:value="alarmDays" v-show="repeatState == 2">
                 <n-space item-style="display: flex;" >
@@ -126,7 +126,7 @@ export default defineComponent({
         { label: '每周', value: 2, },
         { label: '每日', value: 3, },
       ],
-      alarmTimes: ['1次', '2次', '3次'],
+      alarmTimes: ['1', '2', '3'],
       active: false,
       placement: 'bottom',
     })
@@ -269,8 +269,8 @@ export default defineComponent({
 .edit-box {
   background-color: rgb(240, 239, 239);
   border: 1px solid darkgray;
-  height: calc(100% - 0.6rem);
   padding-top: 0.5rem;
+  padding-bottom: 4rem;
 }
 .add-subtodo {
   margin-top: 1rem;

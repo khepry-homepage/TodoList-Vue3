@@ -61,7 +61,7 @@ router.beforeEach(async (to, from) => {
           return Promise.reject('error in refreshToken');
         }
         let new_token = res.data;
-        cookies.set('token', new_token, 2, 'localhost', false);
+        cookies.set('token', new_token, 2, '40.65.153.77', false);
       })
       .catch(err => {
         isNext = { replace: true, name: 'LoginView' }; // 重定向到登录页面

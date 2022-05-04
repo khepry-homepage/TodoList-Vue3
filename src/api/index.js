@@ -4,7 +4,7 @@ import { store } from '../utils/index.js';
 
 
 const request = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://40.65.153.77/api',
   method: 'post',
   withCredentials: true,
   timeout: 5000,

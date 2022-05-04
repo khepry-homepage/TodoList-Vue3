@@ -44,7 +44,7 @@
     text-align: left;
   }
   .n-card {
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 }
 </style>
