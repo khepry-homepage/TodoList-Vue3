@@ -43,6 +43,7 @@ import {
   NGridItem,
   NTooltip,
   NPopconfirm,
+  NProgress,
 } from 'naive-ui'
 
 const naive = create({
@@ -80,6 +81,7 @@ const naive = create({
     NGridItem,
     NTooltip,
     NPopconfirm,
+    NProgress,
   ]
 })
 

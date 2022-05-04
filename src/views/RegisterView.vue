@@ -4,7 +4,7 @@
       <form action="" id="registerForm">
         <n-input placeholder="用户名" 
           v-model:value="registerForm.username" 
-          style="width: 50%" 
+          style="width: 60%" 
           :input-props="{ autocomplete: 'on' }"
           :status="registerForm.usernameStatus"
           clearable>
@@ -20,7 +20,7 @@
           v-model:value="registerForm.password"
           :status="registerForm.passwordStatus"
           :on-change="checkPassword"
-          style="width: 50%"
+          style="width: 60%"
           clearable
         >
         <template #prefix>
@@ -35,7 +35,7 @@
             v-model:value="registerForm.confirmPassword"
             :status="registerForm.confirmPasswordStatus"
             :on-change="checkConfirmPassword"
-            style="width: 50%"
+            style="width: 60%"
             clearable
           >
           <template #prefix>
@@ -43,7 +43,7 @@
           </template>
         </n-input>
       </form>
-      <n-button type="primary" @click="register" style="width: 50%;">
+      <n-button type="primary" @click="register" style="width: 60%;">
         注册
       </n-button>
       <div>已注册过, 直接<router-link to="/login">登录</router-link></div>

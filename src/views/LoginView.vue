@@ -2,7 +2,7 @@
   <access-basic>
     <template #content>
       <form action="" id="loginForm" autocomplete="on">
-        <n-input placeholder="用户名" v-model:value="loginForm.username" style="width: 50%" :status="loginForm.usernameStatus"
+        <n-input placeholder="用户名" v-model:value="loginForm.username" style="width: 60%" :status="loginForm.usernameStatus"
           :on-change="checkUsername"
           :input-props="{ autocomplete: 'on' }"
           clearable>
@@ -19,7 +19,7 @@
           v-model:value="loginForm.password"
           :status="loginForm.passwordStatus"
           :on-change="checkPassword"
-          style="width: 50%"
+          style="width: 60%"
           clearable
         >
           <template #prefix>
@@ -28,7 +28,7 @@
         </n-input>
       </form>
 
-      <n-button type="primary" @click="login" style="width: 50%;">
+      <n-button type="primary" @click="login" style="width: 60%;">
         登录
       </n-button>
       <router-link to="/register">
@@ -89,6 +89,7 @@ export default defineComponent({
             accessToken: res.data.accessToken,
             refreshToken: res.data.refreshToken,
           }
+          let domain = 'localhost';
           cookies.set('token', token, 2, '40.65.153.77', false)  // token有效期为2天
           return Promise.all([api.user.getUser(), api.user.downloadImage()]);
         })

@@ -7,8 +7,8 @@
         </n-button>
       </n-space>
       <n-space>
-        <n-progress type="circle" :percentage="percentage" :style="{width: '15rem'}">
-          <span style="text-align: center; font-size: 2rem; color: #fff;">{{ formatTime }}</span>
+        <n-progress type="circle" :percentage="percentage" :style="{width: '15rem'}" status="success">
+          <span style="text-align: center; font-size: 2rem; color: rgb(68, 68, 68); font-weight:bold;">{{ formatTime }}</span>
         </n-progress>      
       </n-space>
     </div>
@@ -88,7 +88,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       formatTime,
-      closeFocus
+      closeFocus,
     }
   }
 });

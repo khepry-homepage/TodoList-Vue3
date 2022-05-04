@@ -74,6 +74,7 @@ window.addEventListener("beforeunload", function () {
   color: #2c3e50;
   height: 100vh;
   width: 100vw;
+  background-color: #fff;
 }
 .config-provider {
   height: 100%;

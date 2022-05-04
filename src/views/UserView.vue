@@ -1,5 +1,5 @@
 <template>
-  <n-drawer v-model:show="active" width="80%" :placement="placement">
+  <n-drawer v-model:show="active" width="90%" :placement="placement">
     <n-drawer-content class="user-view">
       <template #header>
         <div class="header-title">
@@ -17,7 +17,7 @@
             <n-layout-content content-style="display: flex; align-items: center;">
               <n-layout content-style="padding: 1rem;">
                 <n-layout-header>昵称: {{ userInfo.nickname }}</n-layout-header>
-                <n-layout-footer>加入日期: 2022-4-30</n-layout-footer>
+                <n-layout-footer>注册: 2022-4-30</n-layout-footer>
               </n-layout>
             </n-layout-content>
           </n-layout>

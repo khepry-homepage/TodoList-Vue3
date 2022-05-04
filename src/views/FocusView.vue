@@ -8,7 +8,7 @@
     <template #main>
       <n-card :bordered="false">
         <template #cover>
-          <img src="../assets/focus_background.jpeg">
+          <img src="../assets/focus_background.gif">
         </template>
       </n-card>
       <n-card title="暂别手机, 遇见更好的自己" class="description" header-style="color: rgb(77, 74, 74);font-size: 1.5rem;">
@@ -54,7 +54,7 @@
         </n-gi>
       </n-grid>
       <n-space justify="center">
-        <n-button size="large" type="primary" round :disabled="!(activateIdx >= 0 && activateIdx < lockTimeOptions.length)"
+        <n-button size="large" secondary  type="primary" round :disabled="!(activateIdx >= 0 && activateIdx < lockTimeOptions.length)"
           @click="changeLockState(lockTimeOptions[activateIdx])">
           <template #icon>
             <span class="button-icon">&#xe612;</span>

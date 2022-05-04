@@ -25,7 +25,6 @@
     width: 8em;
     height: 8em;
     border-radius: 50%;
-    border: 1px solid #ddd;
     background-color: black;
   }
   h1 {
@@ -45,6 +44,7 @@
   }
   .n-card {
     margin-top: 3rem;
+    background: url('../assets/access_background.gif') no-repeat center/cover;
   }
 }
 </style>
