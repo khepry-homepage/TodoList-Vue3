@@ -14,7 +14,7 @@ function set(cName, cValue, cExpires, cDomain, isHttpOnly) {
       cExpires: new Date((new Date()).getTime() + cExpires * 86400000).getTime()
     }
     let encodeJsonStr = base64encode(JSON.stringify(jsonObj))
-    cookies.set(cName, encodeJsonStr, {expires: cExpires, domain: cDomain, httpOnly: isHttpOnly})
+    cookies.set(cName, encodeJsonStr, {expires: cExpires, domain: window.location.hostname, httpOnly: isHttpOnly})
     
   } catch (error) {
     console.log('cookie设置错误', error.message)

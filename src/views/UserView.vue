@@ -123,8 +123,13 @@ export default defineComponent({
     })
 
     const activate = (place = 'left') => {
-      state.active = true;
-      state.placement = place;
+      Promise.all([api.user.getUser(), api.user.downloadImage()])
+        .then(([res1, res2]) => {
+          store.commit('initialLoginState', { userInfo: res1.data, userImage: res2.data });
+          state.active = true;
+          state.placement = place;
+        })
+        .catch(err => console.log(err))
     };
 
     emitter.on('showUserView', activate);

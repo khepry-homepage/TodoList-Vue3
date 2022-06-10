@@ -5,6 +5,7 @@ import { resolve } from 'path' // 主要用于alias文件路径别名
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  base: './',
   resolve: {
     alias: {
       '@': resolve(__dirname, '.', 'src'),
@@ -18,13 +19,13 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    proxy: {
-      // 选项写法
-      '/api': {
-        target: 'http://106.15.177.150:8080',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      },
-    }
+    // proxy: {
+    //   // 选项写法
+    //   '/api': {
+    //     target: 'http://106.15.177.150:8080',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, '')
+    //   },
+    // }
   }
 })

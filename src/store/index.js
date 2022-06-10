@@ -4,7 +4,7 @@ const store = createStore({
   state () {
     return {
       userInfo: {
-        nickname: "username",
+        nickname: null,
         userId: null,
         avatar: null,
         nickname: null,

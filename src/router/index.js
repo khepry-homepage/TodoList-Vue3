@@ -8,7 +8,7 @@ const ListView = () => import('@/views/ListView.vue')
 const DataChartView = () => import('@/views/DataChartView.vue') 
 const FocusView = () => import('@/views/FocusView.vue')
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { cookies, api, store } from '../utils/index.js'
+import { api, store } from '../utils/index.js'
 
 const routes = [
   { 
@@ -54,14 +54,11 @@ router.beforeEach(async (to, from) => {
   let isNext = true;
   // 登录前鉴权
   if (to.meta.requireAuthorize) {
-    let token = cookies.get('token');
-    await api.refreshToken({ token: token?.value })
+    await api.user.getUser()
       .then(res => {
         if (res?.code != 200) {
           return Promise.reject('error in refreshToken');
         }
-        let new_token = res.data;
-        cookies.set('token', new_token, 2, '40.65.153.77', false);
       })
       .catch(err => {
         isNext = { replace: true, name: 'LoginView' }; // 重定向到登录页面

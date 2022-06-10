@@ -4,7 +4,7 @@ import { store } from '../utils/index.js';
 
 
 const request = axios.create({
-  baseURL: 'http://40.65.153.77/api',
+  baseURL: 'http://106.15.177.150:8080/',
   method: 'post',
   withCredentials: true,
   timeout: 5000,
@@ -69,7 +69,7 @@ const user = {
     return request({
       url: api.updateUser,
       data: {
-        id: store.state.userId,
+        id: store.state.userInfo.userId,
         nickname: userInfo.nickname
       }
     });

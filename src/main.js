@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import '@/assets/iconfont.css'
 import "@/assets/iconfont.js"
-
 import SvgIcon from './components/SvgIcon.vue'
 import { store, router, plugins } from './utils/index.js'
 

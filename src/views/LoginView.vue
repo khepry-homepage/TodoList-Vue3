@@ -89,12 +89,7 @@ export default defineComponent({
             accessToken: res.data.accessToken,
             refreshToken: res.data.refreshToken,
           }
-          let domain = 'localhost';
-          cookies.set('token', token, 2, '40.65.153.77', false)  // token有效期为2天
-          return Promise.all([api.user.getUser(), api.user.downloadImage()]);
-        })
-        .then(([res1, res2]) => {
-          store.commit('initialLoginState', { userInfo: res1.data, userImage: res2.data });
+          cookies.set('token', token, 2, window.location.hostname, false)  // token有效期为2天
           router.push({ name: 'ListView' });
         })
     }
