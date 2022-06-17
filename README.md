@@ -10,5 +10,4 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 # 运行
 `npm run dev`
 
-## [Demo](http://40.65.153.77/)
 
