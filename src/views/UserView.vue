@@ -38,6 +38,7 @@
                 <n-upload
                   v-model:file-list="fileList"
                   list-type="image-card"
+                  accept="image/png, image/jpeg"
                   :max="1"
                 >
                   点击上传
@@ -129,7 +130,11 @@ export default defineComponent({
           state.active = true;
           state.placement = place;
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          state.active = true;
+          state.placement = place;
+          console.log(err);
+        })
     };
 
     emitter.on('showUserView', activate);
@@ -144,11 +149,15 @@ export default defineComponent({
       },
       onPositiveClick() {
         /* to do */
-        if (!state.fileList.length) return;
-        let reader = new FileReader();
+        if (!state.fileList.length) return;  
         let file = state.fileList[0].file;
+        if (!["image/png", "image/jpeg"].includes(file.type)) {
+          message.error('确保上传正确的图片文件');
+          return;
+        }
+        let reader = new FileReader();
         reader.readAsDataURL(file);
-        
+      
         reader.onload = function () {
           api.user.uploadImage({ base64Image: reader.result, userId: store.state.userInfo.userId })
             .then(res => {

@@ -37,12 +37,12 @@
             </n-space>
             <n-space align="center" justify="center">
               <n-date-picker v-model:value="range" type="datetimerange" clearable input-readonly 
-                :is-date-disabled="disablePreviousDate"/>
+                :is-date-disabled="disablePreviousDate" :is-time-disabled="disablePreviousTime" />
             </n-space>
             <n-space align="center" item-style="margin-left: 1rem;" :wrap="false">
               <n-tooltip trigger="hover">
                 <template #trigger>
-                  <n-switch size="small" @update:value="handleSetAlarm" :default-value="alarmTime != null"/>
+                  <n-switch size="small" @update:value="handleSetAlarm" :default-value="needAlarm" />
                 </template>
                 <span> 设置提醒 </span>
               </n-tooltip>
@@ -59,7 +59,7 @@
               </n-space>   
             </n-space>
             <n-space align="center" :wrap="false">
-              <n-select v-model:value="repeatState" :options="options" />
+              <n-select v-model:value="repeatState" :options="options" :disabled="datesAreOnSameDay(range)" />
               <n-checkbox-group v-model:value="alarmDays" v-show="repeatState == 2">
                 <n-space item-style="display: flex;" >
                   <n-checkbox :value="1" label="一" />
@@ -118,6 +118,7 @@ export default defineComponent({
     const createTodoItem = props.createTodoItem;
     const state = reactive({
       subtodoInputValue: null,
+      repetition: "1",
       repeatState: 0,
       needAlarm: false,
       options: [
@@ -138,7 +139,7 @@ export default defineComponent({
       ec.content = null;
       ec.categoryName = null;
       ec.range = null;
-      ec.repetition = null;
+      ec.repetition = "1";
       ec.alarmTime = null;
       ec.alarmDays = null;
       ec.subtodos = [];      
@@ -168,8 +169,8 @@ export default defineComponent({
       editContent.id = todo.id;
       editContent.categoryName = todo.categoryName;
       editContent.content = todo.content;
-      editContent.range = [new Date(todo.startTime).getTime(), new Date(todo.endTime).getTime()];
-      if (todo.alarmTime) {
+      editContent.range = [new Date(todo.startTime).getTime(), new Date(todo.startTime).getTime()];
+      if (todo.alarmTime.length > 0) {
         const [ alarmTime ] = todo.alarmTime;
         editContent.alarmTime = new Date(alarmTime).getTime();
         state.needAlarm = true;
@@ -188,7 +189,18 @@ export default defineComponent({
 
     /* 禁选过去日期 */
     const disablePreviousDate = (ts) => {
-      return ts <= Date.now();
+      const current_date = new Date(new Date().setHours(0, 0, 0, 0)).getTime();
+      return new Date(ts).getTime() < current_date;
+    }
+    /* 禁选过去时间 */
+    const disablePreviousTime = (ts) => {
+      const current_date = new Date(new Date().setHours(0, 0, 0, 0)).getTime();
+      const new_date = new Date(new Date(ts).setHours(0, 0, 0, 0)).getTime();
+      
+      return {
+        isHourDisabled: (hour) => new_date == current_date && hour < new Date().getHours(), 
+        isMinuteDisabled: (minute) => new_date == current_date && new Date(ts).getHours() == new Date().getHours() && minute < new Date().getMinutes(), 
+      }
     }
     /* 禁用特定时期 */
     const disableDateRange = (ts) => {
@@ -254,13 +266,21 @@ export default defineComponent({
       ...toRefs(state),
       ...toRefs(editContent),
       disablePreviousDate,
+      disablePreviousTime,
       disableDateRange,
       handleSetAlarm,
       inputSubTodo,
       delSubTodo,
       activate,
       affirmModifyTodo,
-      closeEditWindow
+      closeEditWindow,
+      datesAreOnSameDay: (rangeTime) => {
+        if (!rangeTime) {
+          return true;
+        }
+        const [ first, second ] = rangeTime;
+        return new Date(new Date(first).setHours(0, 0, 0, 0)).getTime() == new Date(new Date(second).setHours(0, 0, 0, 0)).getTime();
+      }
     };
   }
 });

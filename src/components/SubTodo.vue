@@ -1,7 +1,7 @@
 <template>
   <li class="todo-subtodo">
-    <input type="checkbox" :checked="subtodo.isCheck"
-      @change="handleSubTodoCheck({ subid: subtodo.id, isCheck: subtodo.isCheck ? false : true})"/>
+    <input type="checkbox" :checked="subtodo.state == 2"
+      @change="handleSubTodoCheck({ subid: subtodo.id, isCheck: subtodo.state == 2 ? false : true})"/>
     <span class="todo-subtodo-content">{{ subtodo.content }}</span>
   </li>
 </template>
@@ -9,7 +9,12 @@
 <script>
 import { toRefs, defineComponent } from 'vue'
 export default defineComponent({
-  props:[ 'subtodo' ],
+  props: {
+    subtodo: {
+      require: true,
+      type: Object,
+    }
+  },
   inject: [ 'handleSubTodoCheck' ],
   setup(props) {
     return {

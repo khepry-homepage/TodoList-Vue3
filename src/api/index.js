@@ -20,6 +20,8 @@ const api = {
   getUser: '/user/getUser',
   updateUser: '/user/updateUser',
   addTodo: '/todo/addTodo',
+  queryTodo: '/todo/queryTodo',
+  modifyTodo: '/todo/modifyTodo',
   uploadImage: '/user/uploadImage',
   downloadImage: '/user/downloadImage',
   completedTodo: '/statistic/completionOfCategory',
@@ -98,6 +100,12 @@ const todo = {
       data: { ...item },
     })
   },
+  modifyTodo(item) {
+    return request({
+      url: api.modifyTodo,
+      data: { ...item },
+    })
+  },
   completedTodo(range) {
     let [ startTime, endTime ] = range;
     return request({
@@ -106,6 +114,17 @@ const todo = {
         userId: 2,
         startTime,
         endTime
+      }
+    })
+  },
+  queryTodo() {
+    return request({
+      url: api.queryTodo,
+      data: {
+        userId: store.state.userInfo.userId,
+        state: 1,
+        startTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+        endTime: new Date(new Date().setHours(23, 59, 59, 999)).Format('yyyy-MM-dd hh:mm:ss'),
       }
     })
   }

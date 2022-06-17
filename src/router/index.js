@@ -59,6 +59,7 @@ router.beforeEach(async (to, from) => {
         if (res?.code != 200) {
           return Promise.reject('error in refreshToken');
         }
+        store.commit('initialLoginState', { userInfo: res.data });
       })
       .catch(err => {
         isNext = { replace: true, name: 'LoginView' }; // 重定向到登录页面

@@ -2,8 +2,8 @@
   <li class="todo-item">
     <div class="main-item">
       <span class="item-check cursor" 
-        @click="handleTodoCheck({ id: todo.id, isCheck: todo.isCheck ? false : true})">
-        <svg-icon iconName="non-checked" :class="{checked: todo.isCheck}"></svg-icon>
+        @click="handleTodoCheck({ id: todo.id, isCheck: todo.state == 2 ? false : true})">
+        <svg-icon iconName="non-checked" :class="{checked: todo.state == 2}"></svg-icon>
       </span>
       <span class="todo-content">{{todo.content}}</span>
       <span class="todo-category">{{todo.categoryName}}</span>
@@ -14,7 +14,7 @@
     <div class="todo-time">
       <span class="week">{{days}}</span>
       <span class="time">{{time}}</span>
-      <span class="alarm" v-show="todo.alarmTime">
+      <span class="alarm" v-show="todo.alarmTime.length != 0">
         {{ alarm }}
       </span>
     </div>
@@ -39,18 +39,17 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const todo = props.todo;
-
+    
     const days = computed(() => {
-      const diffDays = getDiffDays(todo.startTime, new Date().toString());
+      const diffDays = getDiffDays(props.todo.startTime, new Date().toString());
       return diffDays === 0 ? '今天' : diffDays === 1 ? '明天' : diffDays + '天后'; 
     })
     const time = computed(() => {
-      return new Date(todo.startTime).Format('hh:mm');
+      return new Date(props.todo.startTime).Format('hh:mm');
     })
     const alarm = computed(() => {
-      if (!todo.alarmTime) return null;
-      let [ alarmTime ] = todo.alarmTime;
+      if (!props.todo.alarmTime.length) return null;
+      let [ alarmTime ] = props.todo.alarmTime;
       const diffDays = getDiffDays(alarmTime, new Date().toString())
       return (diffDays === 0 ? '今天' : diffDays === 1 ? '明天' : diffDays + '天后') + 
               `${new Date(alarmTime).Format('hh:mm')}响铃`
@@ -59,13 +58,14 @@ export default defineComponent({
 
     const handleTodoCheck = inject('handleTodoCheck');
     const handleSubTodoCheck = ({ subid, isCheck }) => {
+      const todo = props.todo;
       const subtodoIdx = todo.subtodos.findIndex(subtodo => subtodo.id == subid);
       if (subtodoIdx == -1) return;
       handleTodoCheck({ id: todo.id, subid, isCheck });
     } 
 
     const handleEditTodo = () => {
-      emitter.emit('editItem', toRaw(todo));
+      emitter.emit('editItem', toRaw(props.todo));
     }
 
     provide('handleSubTodoCheck', handleSubTodoCheck);
