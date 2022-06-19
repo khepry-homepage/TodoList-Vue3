@@ -20,14 +20,14 @@
       <template v-slot:default>
         <div class="edit-box">
             <n-space align="center" justify="center" :wrap="false">
-              <n-input size="small" round placeholder="待办事项" v-model:value="content">
+              <n-input size="small" round placeholder="待办事项" v-model:value="content" :maxlength="8">
                 <template #suffix>
                   <span class="iconfont">
                     &#xe61a;
                   </span>
                 </template>
               </n-input>
-              <n-input size="small" round placeholder="所属分类" v-model:value="categoryName">
+              <n-input size="small" round placeholder="所属分类" v-model:value="categoryName" :maxlength="8">
                 <template #suffix>
                   <span class="iconfont">
                     &#xe638;
@@ -75,7 +75,7 @@
             <n-space>
               <div class="add-subtodo">
                 <div class="subtodo-input">
-                  <input type="text" placeholder="添加子任务" v-model="subtodoInputValue"
+                  <input type="text" placeholder="添加子任务" v-model="subtodoInputValue" :maxlength="20"
                     @blur="inputSubTodo">
                 </div>
                 <n-scrollbar style="max-height: 100px">
